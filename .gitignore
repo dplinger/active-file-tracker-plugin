@@ -1,0 +1,16 @@
+# IntelliJ IDEA
+.idea/workspace.xml
+.idea/shelf/
+.idea/httpRequests/
+
+# Build output
+target/
+*.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.tmp

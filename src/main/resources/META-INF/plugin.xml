@@ -1,0 +1,28 @@
+<idea-plugin>
+    <id>com.bnep.active-file-tracker</id>
+    <name>ActiveFileTracker</name>
+    <version>1.0.1</version>
+    <vendor email="haha@example.com">dplinger</vendor>
+    <description><![CDATA[
+        <h2>ActiveFileTracker</h2>
+        <p>自动跟踪 IntelliJ IDEA 中当前打开的文件，将文件路径写入 <code>~/.claude/active_file.txt</code>，供 Claude Code 读取并在状态栏显示。</p>
+        <br/>
+        <h3>构建与安装</h3>
+        <ol>
+            <li>进入项目目录：<code>cd ~/Code/active-file-tracker-plugin</code></li>
+            <li>执行构建：<code>bash build.sh</code></li>
+            <li>在 IDEA 中：<code>Settings</code> → <code>Plugins</code> → ⚙ → <code>Install Plugin from Disk</code></li>
+            <li>选择 <code>target/bnep-active-file-tracker.jar</code></li>
+            <li>重启 IDEA 生效</li>
+        </ol>
+        <br/>
+        <h3>工作原理</h3>
+        <p>监听 <code>FileEditorManagerListener</code> 事件，在编辑器切换文件时自动将路径写入本地文件。无需手动操作，零额外开销。</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.bnep.ideplugin.ActiveFileTracker"/>
+    </extensions>
+</idea-plugin>
