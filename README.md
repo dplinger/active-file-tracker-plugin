@@ -23,6 +23,7 @@ CTX ████████░░░░░░░░░░░░ 42% | ⚡100.0%
 先使用以下命令将代码打包为jar包
 ```bash
 cd active-file-tracker-plugin
+# 修改 build.sh中的IDEA_HOME为实际idea的安装地址
 bash build.sh
 ```
 然后在IDEA自定义插件中安装此jar包<br>
