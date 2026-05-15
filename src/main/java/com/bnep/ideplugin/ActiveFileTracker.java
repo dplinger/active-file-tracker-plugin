@@ -6,6 +6,8 @@ import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.project.ProjectManagerListener;
+import com.intellij.openapi.startup.StartupActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -14,19 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * 监听 IDEA 当前打开的编辑器文件，将路径写入 ~/.claude/active_file.txt
- */
-public class ActiveFileTracker implements Runnable {
+public class ActiveFileTracker implements StartupActivity {
 
     private static final Logger LOG = Logger.getInstance(ActiveFileTracker.class);
     private static final Path TARGET = Paths.get(System.getProperty("user.home"), ".claude", "active_file.txt");
 
     @Override
-    public void run() {
-        for (Project project : ProjectManager.getInstance().getOpenProjects()) {
-            registerForProject(project);
-        }
+    public void runActivity(@NotNull Project project) {
+        registerForProject(project);
     }
 
     private static void registerForProject(Project project) {
@@ -41,7 +38,7 @@ public class ActiveFileTracker implements Runnable {
                     }
                 }
         );
-        // 写入当前已经打开的文件
+
         var files = FileEditorManager.getInstance(project).getSelectedFiles();
         if (files.length > 0) {
             writeActiveFile(files[0].getPath());
